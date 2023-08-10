@@ -1,6 +1,6 @@
 import classes from './CartButton.module.css';
-import { cartActions } from '../../store/cartReducer';
 import { useDispatch, useSelector } from 'react-redux'
+import { visibilityActions } from '../../store/visibilityCart';
 
 
 const CartButton = () => {
@@ -10,7 +10,7 @@ const CartButton = () => {
 
 
   const onShowCartHander = () => {
-    dispatch(cartActions.visiblity())
+    dispatch(visibilityActions.Visiblity())
   }
 
   return (

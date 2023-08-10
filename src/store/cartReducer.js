@@ -1,14 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = { cartVisible: false, products: [], quantity: 0, count: 0 };
+const initialState = { products: [], quantity: 0, count: 0 };
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState: initialState,
     reducers: {
-        visiblity(state) {
-            state.cartVisible = !state.cartVisible;
-        },
         addProductToCart(state, action) {
             state.count = state.count + 1;
             const newProduct = action.payload
