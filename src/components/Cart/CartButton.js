@@ -5,7 +5,7 @@ import { visibilityActions } from '../../store/visibilityCart';
 
 const CartButton = () => {
 
-  const counter = useSelector(state => state.cart.count);
+  const counter = useSelector(state => state.cart.totalQuantity);
   const dispatch = useDispatch();
 
 

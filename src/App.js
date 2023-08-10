@@ -3,8 +3,9 @@ import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import { useSelector, useDispatch } from 'react-redux';
-import { visibilityActions } from './store/visibilityCart';
 import Notifications from './components/UI/Notifications';
+import { sendCartData } from './store/cartActions';
+import { getCartData } from './store/cartActions';
 import './App.css'
 
 let isVisible = true;
@@ -17,55 +18,21 @@ function App() {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getCartData())
+  }, [dispatch])
+
 
   useEffect(() => {
-    const fetchProducts = async () => {
 
-      if (isVisible) {
-        isVisible = false;
-        return;
-      }
-
-      dispatch(visibilityActions.showNotification({
-        status: 'Pending',
-        title: 'Sending',
-        message: 'Sending cart data!'
-      }))
-
-      try {
-        const response = await fetch('https://shopingcartredux-default-rtdb.firebaseio.com/cart.  ', {
-          method: 'PUT',
-          body: JSON.stringify(cart)
-        })
-
-        if (response.ok) {
-          dispatch(visibilityActions.showNotification({
-            status: 'success',
-            title: 'Success',
-            message: ' cart data Send Succesfully!'
-          }))
-
-        }
-        else {
-          const data = await response.json();
-          let errorMessage = 'fetching fails!';
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-          throw new Error(errorMessage);
-        }
-      }
-      catch (error) {
-        dispatch(visibilityActions.showNotification({
-          status: 'error',
-          title: 'Fail',
-          message: ' cart data Send Fails!'
-        }))
-      }
-
+    if (isVisible) {
+      isVisible = false;
+      return;
     }
-    fetchProducts()
+    dispatch(sendCartData(cart))
   }, [cart, dispatch]);
+
+
 
 
   return (
